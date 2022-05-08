@@ -1,13 +1,70 @@
-body {
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body{
+  background-color: #0B2434;
+  padding: 1.5em;
+  font-family: 'Karla', sans-serif;
+}
+
+main {
+  background-color: #F5F5F5;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.dice-container{
+  display: grid;
+  grid-template: auto auto / repeat(5, 1fr);
+  grid-gap: 10px;
+}
+
+
+.dice{
+  height: 50px;
+  width: 50px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dice h2{
+  font-size: 1.5em;
+}
+
+button.roll-dice{
+  text-align: center;
+  margin: 1em 0;
+  padding: 0.6em 2em;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+  background-color: #5035FF;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button.roll-dice:focus {
+  outline: none;
+}
+
+button.roll-dice:active {
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+  
+}
+
+.instructions{
+  margin: 0.5em;
+  text-align: center;
+  padding-bottom: 2em;
 }
