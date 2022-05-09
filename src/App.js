@@ -11,12 +11,17 @@ let [dice, setDice] = React.useState(addNewDice())
 /** state to determine if the user has won or not */
 let [tenzies, setTenzies] = React.useState(false)
 
+let [count, setCount] = React.useState(0)
+
+let [time, setTime] = React.useState(performance.now())
+
+let [bestScore,setBestScore] = React.useState(0)
 
 
 /** create a function to generate a die */
 function generateDie(){
   return {
-    value: Math.ceil(Math.random() * 6), 
+    value: Math.ceil(Math.random() * 6),
     isHeld: false,
     id:nanoid()
   }
@@ -44,6 +49,7 @@ function rollDice(){
       return die.isHeld ? die : generateDie()
     })
   })
+  setCount(prev => prev+1)
  }else{
    setTenzies(false)
    setDice(addNewDice())
@@ -66,19 +72,29 @@ React.useEffect(()=>{
   let allHeld = dice.every(die => die.isHeld)
   let firstVal = dice[0].value
   let allValuesHeld = dice.every(die => die.value === firstVal)
-
+ 
   if(allHeld && allValuesHeld){
     setTenzies(true)
-    console.log("You Won")
+    setTime(prev =>performance.now() - prev)
   }
 }, [dice])
 
+React.useEffect(()=>{
+  localStorage.setItem("time", JSON.stringify(time))
+  setBestScore(
+    JSON.parse(localStorage.getItem("time"))
+  )
+  
+}, [time])
+
+ 
 const diceElements = dice.map(die => <Dice key={die.id} value={die.value} isHeld={die.isHeld} handleisHeld={() => holdDice(die.id)}/>)
 
 console.log(addNewDice())
   return (
   
     <main>
+      <p>Prev Score: {Math.floor(bestScore/1000)}</p>
       {tenzies && <Confetti />}
       <h1 className="title">Tenzies</h1>
             <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
@@ -86,7 +102,7 @@ console.log(addNewDice())
                 {diceElements} 
         </div> 
         <button className="roll-dice" onClick={rollDice}>{tenzies ? "New Game" : "Roll"}</button>
-        
+        {tenzies && <p><strong>{count} Rolls in {Math.floor(time/1000)} seconds</strong></p>}
     </main>
     
   
